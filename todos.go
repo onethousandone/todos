@@ -22,6 +22,7 @@ var (
 func main() {
 	var absDirs []string
 	var todos []parser.Todo
+	basedir, _ := filepath.Abs(".")
 	flag.Parse()
 
 	if len(*pkgs) == 0 {
@@ -48,7 +49,7 @@ func main() {
 		localTodos := parser.GetTodos(prg)
 		if *absolutePaths {
 			for i := 0; i < len(localTodos); i++ {
-				localTodos[i].Pos.Filename = strings.TrimPrefix(localTodos[i].Pos.Filename, dir)
+				localTodos[i].Pos.Filename = strings.TrimPrefix(localTodos[i].Pos.Filename, basedir)
 			}
 		}
 		todos = append(todos, localTodos...)
