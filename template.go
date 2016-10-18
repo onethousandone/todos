@@ -11,7 +11,7 @@ Todo's
 {{end}}
 
 {{range $index, $todo := .Todos}}
-- [ ] {{$todo.Text}} (<code>{{$todo.Pos}}</code>)
+- [ ] {{$todo.Text}} ([{{$todo.Pos.Filename}}]({{$todo.Pos.Filename}}) {{$todo.Pos.Line}}:{{$todo.Pos.Column}})
 {{end}}
 
 > Generated with todos {{.Command}}, for more information: [todos](https://github.com/onethousandone/todos)

@@ -14,8 +14,9 @@ import (
 
 // TODO: Create a template flag where you can use your own todo-list template
 var (
-	pkgs       = flag.String("pkgs", ".", "A list of comma separated package paths")
-	outputFile = flag.String("output-file", "TODO.md", "Output file for todo's")
+	pkgs          = flag.String("pkgs", ".", "A list of comma separated package paths")
+	outputFile    = flag.String("output-file", "TODO.md", "Output file for todo's")
+	absolutePaths = flag.Bool("absolute-paths", false, "Use absolute paths in output")
 )
 
 func main() {
@@ -43,7 +44,14 @@ func main() {
 		if err != nil {
 			log.Fatalf("parsing program: %v", err)
 		}
-		todos = append(todos, parser.GetTodos(prg)...)
+
+		localTodos := parser.GetTodos(prg)
+		if *absolutePaths {
+			for i := 0; i < len(localTodos); i++ {
+				localTodos[i].Pos.Filename = strings.TrimPrefix(localTodos[i].Pos.Filename, dir)
+			}
+		}
+		todos = append(todos, localTodos...)
 	}
 
 	// Write analysis to markdown file.
