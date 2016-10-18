@@ -12,8 +12,9 @@ import (
 	"github.com/onethousandone/todos/parser"
 )
 
+// TODO: Create a template flag where you can use your own todo-list template
 var (
-	pkgs       = flag.String("pkgs", "", "A list of comma separated package paths")
+	pkgs       = flag.String("pkgs", ".", "A list of comma separated package paths")
 	outputFile = flag.String("output-file", "TODO.md", "Output file for todo's")
 )
 
